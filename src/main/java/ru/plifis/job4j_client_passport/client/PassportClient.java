@@ -5,6 +5,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.plifis.job4j_client_passport.model.PassportDto;
@@ -67,5 +68,10 @@ public class PassportClient {
                 String.format("%s/find-replaceable", url),
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<PassportDto>>() {}
         ).getBody();
+    }
+
+    @Scheduled(fixedDelay = 2000)
+    public void checkUnavailablePassports() {
+        getUnavailablePassports();
     }
 }
